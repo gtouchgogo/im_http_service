@@ -13,7 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.misc.BASE64Decoder;
+//import sun.misc.BASE64Decoder;
+import java.util.Base64;
 
 import javax.annotation.Resource;
 import java.util.Set;
@@ -113,8 +114,12 @@ public class IUserLoginService implements IUserLogin {
             return null;
         }
         try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] baseDecode = decoder.decodeBuffer(encodePassword);
+//            BASE64Decoder decoder = new BASE64Decoder();
+            Base64.Decoder decoder = Base64.getDecoder();
+
+//            byte[] baseDecode = decoder.decodeBuffer(encodePassword);
+            byte[] baseDecode = decoder.decode(encodePassword);
+
             return RSAEncrypt.decrypt(baseDecode, RSA_PRIVATE);
         } catch (Exception e) {
             LOGGER.error("decode password error encode password {}", encodePassword, e);
@@ -125,8 +130,12 @@ public class IUserLoginService implements IUserLogin {
     public static void main(String[] args) {
         String private_key = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALLZVcMCUJmWPuA8e8L+/C9ulM38bJbS2Y0KqHRQ+K11NMZmTdRwuq72VYwY9WIv/mWFuiJKiCwPEksd3Cj3UMMGNNfUdu7K46G+y9rJXthzy35qMVb/xHCW+EZLNWmW2GhT6Z32QZ5ny3vdVZZlQQHSLJbHtj9GNTBN2c6U1cPNAgMBAAECgYAeUaWuR2gugT/rd5Vrexp5V/+148Ls1pW2yUXBYjCmByaJM7Kh/vJG0s+xzlFa8dPolgD16zimb2+keE1oTHTOMmS4Bb0QItvh1kDVvqy1DLuceXt2BPXdGwSMokjcJguYrYyd6Kz105vPPQKoyB1sADjnrNDhW4yXAlnN/QFPwQJBANaKlvEx7LS2f7UjiUv7Ulh+t9BmgD52/R3xfaC3R3yK\"0kU9BhawkK3i9SXjxznwT6FZqsIGX7KXjKbPtGW2bCkCQQDVaQi/BaULKWJSmAztXSuny/EE/JNeo1nr7GKpWi1fY8hDXXp81VblPHkOgDFD9z5AAs5lcCJjsGIBn4AyXU8FAkBloBiIACIkKB6uazrqJw6GpN/lc+hjrnGP8YiUzLysHgYkjheIP/MIq218mT0SEOdngtYEOoiyTF9v1Qua8qKhAkB+jrBaH+3VZbBiTLt11Ef8VUxUabi3aeX8rA2CYvD/Xbw4fuoRt661eRxNRiZxKOFosoFV1J8AQWyNi9pJg95FAkEA0uTiMI41VCRjNKae+pSsW8M4Wr0SLknTzBp68UihqJokn068yDQC55bAej+R83PUaQJXp17iYpOyGBPl3ZXRPg==";
         try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] baseDecode = decoder.decodeBuffer("hWTQsK6I8cgZgjplTaow65HMUpps3q858Jx1yk6/8CRdHQHAtsihFeVZDKabGfnTvfejviz+281JcUn318cpA6xodHgrKy62ozefH0JSpK208JjFiJC0raAEMv0+VFjJ90Es6XOCLVgfa8z79hImD+jSL0YvjMxyVasV2NIVkg4=");
+//            BASE64Decoder decoder = new BASE64Decoder();
+            Base64.Decoder decoder = Base64.getDecoder();
+
+//            byte[] baseDecode = decoder.decodeBuffer("hWTQsK6I8cgZgjplTaow65HMUpps3q858Jx1yk6/8CRdHQHAtsihFeVZDKabGfnTvfejviz+281JcUn318cpA6xodHgrKy62ozefH0JSpK208JjFiJC0raAEMv0+VFjJ90Es6XOCLVgfa8z79hImD+jSL0YvjMxyVasV2NIVkg4=");
+            byte[] baseDecode = decoder.decode("hWTQsK6I8cgZgjplTaow65HMUpps3q858Jx1yk6/8CRdHQHAtsihFeVZDKabGfnTvfejviz+281JcUn318cpA6xodHgrKy62ozefH0JSpK208JjFiJC0raAEMv0+VFjJ90Es6XOCLVgfa8z79hImD+jSL0YvjMxyVasV2NIVkg4=");
+
             String pwd =  RSAEncrypt.decrypt(baseDecode, private_key);
             System.out.println(pwd);
         } catch (Exception e) {
